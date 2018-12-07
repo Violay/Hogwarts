@@ -1,0 +1,60 @@
+package snow;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Frame;
+import java.awt.Graphics;
+import java.awt.Panel;
+
+public class snow {
+
+	public static void main(String[] args) {
+		Frame w=new Frame();
+		w.setSize(1024, 768);
+		w.setBackground(Color.BLACK);
+		MyPanel mp=new MyPanel();
+		mp.abc();
+		
+		w.add(mp);
+		
+		Thread t=new Thread(mp);
+		t.start();
+		
+		w.show();
+
+	}
+
+}
+class MyPanel extends Panel implements Runnable{
+	int x[]=new int [300];
+	int y[]=new int [300];
+	//构造方法
+	public void abc(){
+	for(int i=0;i<300;i++)
+	{
+		x[i]=(int)(Math.random()*1024);
+		y[i]=(int)(Math.random()*768);
+	}
+}
+	
+	public void paint(Graphics g){
+		
+		for(int i=0;i<300;i++)
+		{    g.setFont(new Font("",0,54));
+			g.setColor(new Color((int)(Math.random()*225),(int)(Math.random()*225),(int)(Math.random()*225)));
+			g.drawString("*", x[i], y[i]);}
+ }
+	public void run(){
+		while(true){
+	try{
+		for(int i=0;i<300;i++)
+		{  y[i]++;
+		if(y[i]>768){
+			y[i]=0;}
+	  }
+		Thread.sleep(30);
+	}catch(Exception e){}
+	repaint();
+     }
+  }
+}
